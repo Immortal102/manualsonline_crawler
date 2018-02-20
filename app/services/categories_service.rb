@@ -1,8 +1,9 @@
 class CategoriesService < StartDataService
   CONFIG_PATH = "#{Rails.root.to_s}/config/product_types.yml"
 
-  def initialize(brand)
+  def initialize(brand, use_matching=true)
     @brand = brand
+    @use_mathing = use_matching
     super()
   end
 
@@ -19,7 +20,7 @@ class CategoriesService < StartDataService
 
   def prepared_to_insert
     @prepared_to_insert ||= begin
-      c_data = brand_categories.map do |raw_data|
+      brand_categories.map do |raw_data|
         prepared_from_raw(raw_data)
       end.compact
     end
@@ -40,7 +41,7 @@ class CategoriesService < StartDataService
 
   def prepared_from_raw(data)
     c_name = data[:link_text].gsub(/\sManuals/, '').downcase
-    return unless matched.find{|md| md.downcase == c_name}
+    return if (@use_mathing && !matched.find{|md| md.downcase == c_name})
     uri = URI(data[:href])
     subdomain = uri.host.gsub(/www\./, '').split('.').first
     {
