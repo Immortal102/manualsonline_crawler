@@ -22,6 +22,6 @@ class StartDataService
   end
 
   def missed
-    @missed ||= matched - allowed
+    @missed ||= matched - allowed.map{|a| a[:name]}
   end
 end

@@ -5,11 +5,13 @@ class ManualsonlineDataService
   def initialize(page_url)
     @products_data = @categories_data = []
     @uri = URI(page_url)
+    @count = 0
   end
 
   def get_categories_data
-    get_links_data('.letter-content .seeprices-header > a', categories_data)
+    get_links_data('.letter-content h5 > a', categories_data)
   end
+  alias_method :get_brands_data, :get_categories_data
 
   def get_products_data
     get_links_data('.product-list h5 > a', products_data)
@@ -29,6 +31,7 @@ class ManualsonlineDataService
     begin
       block.call
       @uri = next_page
+      puts "Process #{@uri.to_s} / page #{@count += 1} \n"
     end while next_page.present?
   end
 
