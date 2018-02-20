@@ -30,10 +30,6 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'capybara'
-gem 'capybara-webkit'
-gem 'capybara-screenshot'
-
 group :development, :test do
   gem 'pry'
 end
