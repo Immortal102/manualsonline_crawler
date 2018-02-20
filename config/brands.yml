@@ -1,3 +1,6 @@
+base_url:
+  "http://manualsonline.com/brands"
+
 all:
   - "12Volt"
   - "2JANE"
