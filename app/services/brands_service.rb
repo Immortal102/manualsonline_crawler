@@ -1,11 +1,5 @@
 class BrandsService < StartDataService
   CONFIG_PATH = "#{Rails.root.to_s}/config/brands.yml"
-  attr_reader :inserted_errors
-
-  def initialize
-    @inserted_errors = []
-    super
-  end
 
   def prepared_to_insert
     @prepared_to_insert ||= begin
@@ -17,7 +11,7 @@ class BrandsService < StartDataService
     prepared_to_insert.each do |attrs|
       Brand.create! attrs
     rescue Exception => e
-      @inserted_errors << {name: attr[:name], errs: e.message}
+      @errors << {name: attr[:name], errs: e.message}
     end
   end
 

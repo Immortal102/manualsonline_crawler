@@ -18,6 +18,7 @@ module RemoteDataGetter
     end
 
     def find_elements(css_selector)
+      return [] if errors.any?
       page.css(css_selector)
     end
 

@@ -1,5 +1,5 @@
 class StartDataService
-  attr_reader :base_url, :allowed, :given, :matching
+  attr_reader :base_url, :allowed, :given, :matching, :errors
 
   def self.config_data
     if defined?(self::CONFIG_PATH)
@@ -14,6 +14,7 @@ class StartDataService
     @allowed = self.class.config_data[:all]
     @given = self.class.config_data[:given]
     @matching = self.class.config_data[:matching]
+    @errors = []
   end
 
   def matched
