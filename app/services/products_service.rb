@@ -18,7 +18,7 @@ class ProductsService
     @prepared_to_insert ||= begin
       brands_category_products.map do |raw_data|
         prepared_from_raw(raw_data)
-      end
+      end.compact
     end
   end
 
@@ -42,7 +42,9 @@ class ProductsService
 
     uri.scheme = base_uri.scheme
     uri.host = base_uri.host
-
     { raw_name: data[:link_text], name: b_name, manualsonline_url: uri.to_s, brands_category_id: @brands_category.id }
+  rescue URI::InvalidURIError => e
+    @errors << {name: "brand: '#{@brand.name}' / category: '#{@category.name}' / product: '#{data[:link_text]}'", errs: e.message}
+    return nil
   end
 end
