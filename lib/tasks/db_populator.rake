@@ -87,6 +87,7 @@ namespace :db do
         bcs = ProductsService.new(brand, category)
         bcs.populate_db!
         errors << bcs.errors
+        errors.flatten!
 
         puts "     Complete processing category: '#{category.name}'"
         puts '-'*80
