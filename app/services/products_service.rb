@@ -3,6 +3,7 @@ class ProductsService
     @brand = brand
     @category = category
     @brands_category = BrandsCategory.find_by(brand_id: @brand.id, category_id: @category.id)
+    @errors = []
   end
 
   def populate_db!
@@ -35,13 +36,13 @@ class ProductsService
   end
 
   def prepared_from_raw(data)
-    base_uri = URI(@brand_category_url)
-    b_name = data[:link_text].gsub(Regexp.new("#{@brand.name}\s+#{@category.name}", Regexp::IGNORECASE)).strip
+    base_uri = URI(@brands_category.manualsonline_url)
+    b_name = data[:link_text].gsub(Regexp.new("#{@brand.name} #{@category.name}", Regexp::IGNORECASE), '').strip
     uri = URI(data[:href])
 
     uri.scheme = base_uri.scheme
     uri.host = base_uri.host
 
-    { name: b_name, manualsonline_url: uri.to_s, brands_category_id: @brands_category.id }
+    { raw_name: data[:link_text], name: b_name, manualsonline_url: uri.to_s, brands_category_id: @brands_category.id }
   end
 end

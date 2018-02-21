@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20180221071325) do
 
   create_table "products", force: :cascade do |t|
     t.integer "brands_category_id"
+    t.string "raw_name"
     t.string "name"
     t.string "manualsonline_url"
     t.datetime "created_at", null: false
