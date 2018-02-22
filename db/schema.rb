@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221071325) do
+ActiveRecord::Schema.define(version: 20180222090803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20180221071325) do
     t.string "manualsonline_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_brands_on_name"
   end
 
   create_table "brands_categories", force: :cascade do |t|
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180221071325) do
     t.string "manualsonline_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["brand_id", "category_id"], name: "index_brands_categories_on_brand_id_and_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -36,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180221071325) do
     t.string "manualsonline_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "manualsonline_subdomain"], name: "index_categories_on_name_and_manualsonline_subdomain"
   end
 
   create_table "products", force: :cascade do |t|
@@ -45,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180221071325) do
     t.string "manualsonline_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["brands_category_id", "name", "raw_name"], name: "index_products_on_brands_category_id_and_name_and_raw_name"
   end
 
 end
